@@ -1,0 +1,86 @@
+﻿@model IEnumerable<AIMH_Sialkot.Models.ViewModel_TestOptionsResults>
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<br />
+
+<style>
+    .table th, .table td { 
+     border-top: none !important; 
+ }
+</style>
+
+<div class="col-md-offset-1 col-md-10">
+    <p><b>Lab No: @ViewBag.Labno</b></p>
+    <p><b>Patient Name: @ViewBag.PatientName</b></p>
+    <p><b>Test Name: @ViewBag.TestName</b></p>
+</div>
+    <div class="col-md-offset-1 col-md-10">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <table class="table">
+                <tr style="background-color: rgb(216, 216, 216);">
+                    <th></th>
+                    <th>Results</th>
+                    <th>Ranges</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @{ int count = 0;}
+                @foreach (var item in Model)
+                {
+                    string resultidName = "[" + count + "].ResultID";
+                    string valueName = "[" + count + "].Value";
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                @Html.Label(item.OptionName, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-inline">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @*@Html.HiddenFor(modelItem => item.ResultID)*@
+                                <input type="hidden" name=@resultidName value=@item.ResultID />
+                                @Html.HiddenFor(modelItem => item.OptionID)
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name=@valueName required="required" />
+                                        @*@Html.EditorFor(modelItem => item.Value, new { htmlAttributes = new { @class = "form-control" }, name=@valueName })*@
+                                        @if (!string.IsNullOrEmpty(item.OptionUnit.Trim()))
+                                        {
+                                            <div class="input-group-addon">@item.OptionUnit</div>
+                                        }
+                                        @Html.ValidationMessageFor(modelItem => item.Value, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group">
+                                @Html.Label(item.Range, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                        </td>
+                    </tr>
+                    count++;
+                }
+
+            </table>
+            <div class="form-group">
+                <div class="col-md-offset-0 col-md-12 text-center">
+                    <br /><br />
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+                    }
+    </div>

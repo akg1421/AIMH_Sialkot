@@ -1,0 +1,50 @@
+﻿@model AIMH_Sialkot.Models.Results
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Results</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PatientID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PatientID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TestID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ResultID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

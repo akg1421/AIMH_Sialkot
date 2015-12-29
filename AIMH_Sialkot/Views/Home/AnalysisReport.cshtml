@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "AnalysisReport";
+}
+
+<div class="container">
+    <div class="jumbotron">
+        <h3>Analysis Report</h3><small>(Current month selected by default.)</small>
+        <hr />
+        <form class="form-inline" href="~/Home/AnalysisReport" method="post">
+            <div class="form-group">
+                <label>From:&nbsp;</label>
+                <input class="form-control" type="date" name="fromdate" placeholder="Select month-year" required="required" />
+                <label>-</label>
+                <input class="form-control" type="date" name="todate" placeholder="Select month-year" required="required" />
+                <label>-</label>
+                <input class="form-control" type="text" name="testname" placeholder="Enter test name" />
+                <input type="submit" class="btn btn-default form-control" value="Check" />
+            </div>
+        </form><br />
+
+        <p>
+            <b>Daily Cash:  Rs. </b><b>/-</b>
+        </p>
+
+        <p>
+            <b>Monthly Cash:  Rs. </b><b>/-</b>
+        </p>
+
+        <p>
+            <b>No of tests:  </b>
+        </p>
+
+        <p>
+            <b>No of patients: </b>
+        </p>
+    </div>
+
+</div>

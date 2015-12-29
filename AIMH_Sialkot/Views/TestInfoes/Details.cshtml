@@ -1,0 +1,75 @@
+﻿@model AIMH_Sialkot.Models.TestInfo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="jumbotron">
+    <h3>Patient Info</h3>
+    <hr />
+    <div class="row">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TestName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TestName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Abbreviation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Abbreviation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Details)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Details)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedOn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedOn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedOn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedBy)
+            </dd>
+
+        </dl>
+    </div>
+
+    <div class="text-center">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.TestID }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+        @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+    </div>
+</div>

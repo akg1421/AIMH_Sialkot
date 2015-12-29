@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "ShowTests";
+}
+<br />
+<div class="row">
+    @if (ViewBag.message != null)
+    {
+        <div class="alert alert-default text-center">
+            <a href="~/Prints/Index"><strong class="text-danger">@ViewBag.message</strong></a>
+        </div>
+    }
+</div>
+
+<div class="container">
+    <div class="row">
+        <table class="table table-striped table-bordered">
+
+            @if (ViewBag.PatientTests != null)
+            {
+                <tr>
+                    <th class="col-md-11">
+                        Test Name
+                    </th>
+                    <th class="col-md-1">
+                    </th>
+                </tr>
+            }
+
+            @foreach (var x in ViewBag.PatientTests)
+            {
+                <tr>
+                    <td>
+                        @x.TestName
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                            @*@Html.ActionLink("Enter Result", "ResultEntry", new { TestID = x.TestID, PatientID = ViewBag.PatientID }, htmlAttributes: new { @class = "btn btn-default btn-xs" })*@
+                            <a href='@Url.Action("Print", "Prints", new { TestID = x.TestID, PatientID = ViewBag.PatientID })' title="Print Report" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-new-window"></span></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+

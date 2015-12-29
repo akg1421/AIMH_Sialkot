@@ -1,0 +1,142 @@
+﻿@model AIMH_Sialkot.Models.TestOptions
+
+@{
+    ViewBag.Title = "AddTestOption";
+}
+
+
+<div class="container">
+
+    <div class="row">
+        <h3>Test Information</h3>
+        <hr />
+
+        <div class="jumbotron" style="padding-top: 15px; padding-bottom: 5px;">
+            <dl class="dl-horizontal" style="font-family: Calibri;font-size: 19px;">
+                <dt>
+                    Name:
+                </dt>
+                <dd>
+                    @ViewBag.ShowTest.TestName
+                </dd>
+                <dt>
+                    Abbreviation:
+                </dt>
+                <dd>
+                    @ViewBag.ShowTest.Abbreviation
+                </dd>
+                <dt>
+                    Details:
+                </dt>
+                <dd>
+                    @ViewBag.ShowTest.Details
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    
+
+
+    @*<div class="row">
+            <div class="col-md-12">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-inline">
+                        <h4>Enter test option</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OptionName, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.OptionName, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OptionUnit, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.OptionUnit, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OptionUnit, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Range, htmlAttributes: new { @class = "control-label" })
+
+                            @Html.EditorFor(model => model.Range, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Range, "", new { @class = "text-danger" })
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <input type="submit" value="Save Option" class="btn btn-default btn-sm" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>*@
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            
+            @*<h4>Test Options</h4>
+            <hr />*@
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th class="col-md-4">
+                        Option Name
+                    </th>
+                    <th class="col-md-4">
+                        Option Unit
+                    </th>
+                    <th  class="col-md-4" colspan="2">
+                        Option Range
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.EditorFor(model => model.OptionName, new { htmlAttributes = new { @class = "form-control", placeholder="Option name" } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.OptionUnit, new { htmlAttributes = new { @class = "form-control", placeholder = "Option unit" } })
+                    </td>
+                    <td class="col-md-10">
+                        @Html.EditorFor(model => model.Range, new { htmlAttributes = new { @class = "form-control", placeholder = "Option range" } })
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input type="submit" value="Save Option" class="btn btn-default btn-sm" />
+                        </div>
+                    </td>
+                </tr>
+          
+
+
+                @foreach (var x in ViewBag.ShowTestOptions)
+                {
+                    <tr>
+                        <td>
+                            <text>@x.OptionName </text>
+                        </td>
+                        <td>
+                            <text>@x.OptionUnit </text>
+                        </td>
+                        <td colspan="2">
+                            <text>@x.Range </text>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    </div>

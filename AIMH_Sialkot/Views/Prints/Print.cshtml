@@ -1,0 +1,101 @@
+﻿@model IEnumerable<AIMH_Sialkot.Models.ViewModel_TestOptionsResults>
+
+@{
+    Layout = null;
+    ViewBag.Title = "Edit";
+}
+
+<link rel="shortcut icon" href="@Url.Content("~/Images/favicon.ico")" type="image/x-icon" />
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<style>
+    .patientInfo th, .patientInfo td, table {
+        border-top: none !important;
+        white-space: nowrap;
+    }
+
+</style>
+<style media="print">
+    .navbar{
+        display:normal !important;
+    }
+
+    .navbar-fixed-top{
+        display:normal !important;
+    }
+    .patientInfo th, .patientInfo td, table {
+        border-top: none !important;
+        white-space: nowrap;
+    }
+
+    .noprint{
+        display:none;
+    }
+</style>
+
+
+<div id="print" class="row" style="height: auto !important; width:100% !important;">
+    @*<div class="row navbar-fixed-top" style="background: url('/Images/Banner.png'); background-size: 100% 100%; background-repeat: no-repeat; height:125px"></div>*@
+    <div class="row text-center" style="height:125px"><h1>AIMH - Pathology</h1></div>
+    <br /><br /><br />
+    <div class="container">
+        <table class="table patientInfo">
+            <tr>
+                <th class="col-md-9">Lab No: @ViewBag.PatientLabno</th>
+                <th>Date: @DateTime.Now.ToString("d")</th>
+            </tr>
+            <tr>
+                <th>Name: @ViewBag.PatientName</th>
+                <th>Age: @ViewBag.PatientAge</th>
+            </tr>
+            <tr>
+                <th>Ward: @ViewBag.PatientWard</th>
+                <th>Sex: @ViewBag.PatientSex</th>
+            </tr>
+            <tr>
+                <th>Category: @ViewBag.PatientCategory</th>
+                <th>Reporting: @ViewBag.PatientCreatedOn</th>
+            </tr>
+        </table>
+        <br />
+        <h2>@ViewBag.TestName</h2>
+
+        <table class="table">
+            <tr>
+                <th>Test Name</th>
+                <th>Result</th>
+                <th>Unit</th>
+                <th>Range</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <text>@item.OptionName</text>
+                    </td>
+
+                    <td>
+                        <text>@item.Value</text>
+                    </td>
+
+                    <td>
+                        <text>@item.OptionUnit</text>
+                    </td>
+
+                    <td>
+                        <text>@item.Range</text>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <h3>Comments: </h3>
+    </div>
+</div>
+<a href="javascript:window.print()" class="btn btn-primary noprint">Print</a>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

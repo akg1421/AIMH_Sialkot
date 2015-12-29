@@ -1,0 +1,98 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html style="height:100%">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="@Url.Content("~/Images/favicon.ico")" type="image/x-icon" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body style="position: relative; min-height: 100%;">
+    <style>
+        .navbar {
+            box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.22) !important;
+            background-color: #3C3C3C;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+            .navbar li {
+                font-size: 17px !important;
+                color: #FFF !important;
+                font-weight: 600;
+                border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+                transition: background-color ease-in-out .5s;
+            }
+
+        .nav li > a, .navbar-brand {
+            color: white;
+            text-decoration: none;
+        }
+
+            .nav li > a:hover, a:focus, .navbar-brand:hover, navbar-brand:focus {
+                color: black;
+                background-color: #EEEEEE !important;
+            }
+    </style>
+
+    <div class="row navbar-fixed-top">
+        <div class="row">
+            <div class="col-md-12" style="background: url('/Images/Banner.png'); background-size: 100% 100%; background-repeat: no-repeat; height:125px"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navbar">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="~/Home/Index" title="Home"><span class="glyphicon glyphicon-home"></span></a>
+                        @*@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                    </div>
+                    <div class="navbar-collapse collapse text-center">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("New Patient", "Create", "PatientInfoes")</li>
+                            <li>@Html.ActionLink("Result Entry", "Index", "Results")</li>
+                            <li>@Html.ActionLink("Print Report", "Index", "Prints")</li>
+                            <li>@Html.ActionLink("Analysis Report", "AnalysisReport", "Home")</li>
+                            @if (HttpContext.Current.User.IsInRole("Admin") || HttpContext.Current.User.IsInRole("SuperAdmin"))
+                            {
+                                <li>@Html.ActionLink("Setting", "Setting", "Home")</li>
+                                <li>@Html.ActionLink("Register user", "Register", "Account")</li>
+                            }
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br /><br /><br /><br /><br /><br /><br />
+    <div class="container body-content" style="height: auto !important; width:100%; margin-bottom: 82px;">
+        @RenderBody()
+    </div>
+    <footer class="text-center" style="left: 0px;
+bottom: 0px;
+height: 73px;
+width: 100%;
+overflow: hidden;
+position:absolute">
+        <hr />
+        <p>
+            <b>Powered By: <a href="http://pitb.gov.pk" target="_blank">Punjab Information Technology Board</a></b>
+        </p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

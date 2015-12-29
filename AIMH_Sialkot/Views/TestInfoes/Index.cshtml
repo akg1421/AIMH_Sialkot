@@ -1,0 +1,189 @@
+﻿@model IEnumerable<AIMH_Sialkot.Models.TestInfo>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="jumbotron">
+        <form class="form-horizontal col-md-12" action="~/TestInfoes/Index" method="post">
+            <div class="col-md-8 pull-left">
+                <div class="col-md-2">
+                    <p><b>Search</b></p>
+                </div>
+                <div class="col-md-10" style="display:flex">
+                    <input type="text" class="form-control" placeholder="Lab no / Name" name="searchItem" required="required" autofocus="autofocus" />
+                    <button type="submit" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-4 text-right">
+                @Html.ActionLink("Add Test", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        @if (ViewBag.message != null)
+        {
+            <div class="alert alert-default text-center">
+                <a href="~/TestInfoes/Index"><strong class="text-danger">@ViewBag.message</strong></a>
+            </div>
+        }
+    </div>
+
+
+    @if (Model != null && Model.Count() != 0)
+    {
+        <div class="row">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Sr.</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TestName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Abbreviation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Details)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModifiedBy)
+                    </th>
+                    <th></th>
+                </tr>
+                @{ int k = 1;}
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>@k</th>
+                        @{k++;}
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TestName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Abbreviation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Details)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedOn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedBy)
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                                <a href="~/TestInfoes/Edit/@item.TestID" title="Edit" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
+                                <a href="~/TestInfoes/Details/@item.TestID" title="Details" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-th-list"></span></a>
+                                <a href="~/TestInfoes/Delete/@item.TestID" title="Delete" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                                @*@Html.ActionLink("Edit", "Edit", new { id = item.TestID }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+                                    @Html.ActionLink("Details", "Details", new { id = item.TestID }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.TestID }, htmlAttributes: new { @class = "btn btn-default btn-xs" })*@
+                            </div>
+                        </td>
+                    </tr>
+                            }
+
+            </table>
+        </div>
+                            }
+
+
+</div>
+
+
+<!----------------------------------------------------------->
+@*<br /><br /><br /><br /><br />
+<div class="row text-left">
+    @Html.ActionLink("New Test", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
+</div>
+<br />
+
+<div class="row">
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>Sr.</th>
+            <th>
+                @Html.DisplayNameFor(model => model.TestName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Abbreviation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Details)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </th>
+            <th></th>
+        </tr>
+
+
+        @{ int i = 1;}
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@i</th>
+                @{i++;}
+                <td>
+                    @Html.DisplayFor(modelItem => item.TestName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abbreviation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Details)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedBy)
+                </td>
+                <td>
+                    <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TestID }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+                        @Html.ActionLink("Details", "Details", new { id = item.TestID }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.TestID }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+                    </div>
+                </td>
+            </tr>
+                    }
+
+    </table>
+</div>*@

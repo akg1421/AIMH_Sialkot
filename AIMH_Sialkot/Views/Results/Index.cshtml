@@ -1,0 +1,122 @@
+﻿@model IEnumerable<AIMH_Sialkot.Models.PatientInfo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<div class="container">
+    <div class="jumbotron">
+        <form class="form-horizontal text-center" action="~/Results/Index" method="post">
+            <div class="col-md-4 text-center">
+                <p><b>Search</b></p>
+            </div>
+            <div class="col-md-8 text-left" style="display:flex">
+                <input type="text" class="form-control" placeholder="Lab no / Name" name="searchItem" required="required" autofocus="autofocus" />
+                <button type="submit" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        @if (ViewBag.message != null)
+        {
+            <div class="alert alert-default text-center">
+                <a href="~/PatientInfoes/Create"><strong class="text-danger">@ViewBag.message</strong></a>
+            </div>
+        }
+    </div>
+
+    @if (Model != null && Model.Count() != 0)
+    {
+        <div class="row">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Sr.</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LabNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReceiptNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Guardian)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Age)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sex)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OutdoorNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IndoorNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ward)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReferenceBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </th>
+                    <th></th>
+                </tr>
+                @{ int k = 1;}
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>@k</th>
+                        @{k++;}
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LabNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiptNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Guardian)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Age)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sex)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OutdoorNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IndoorNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ward)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReferenceBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                                @Html.ActionLink("View Tests", "ShowTests", new { PatientID = item.PatientID }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+                            </div>
+                        </td>
+                    </tr>
+                            }
+
+            </table>
+        </div>
+                            }
+</div>

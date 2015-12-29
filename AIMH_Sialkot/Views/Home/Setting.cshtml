@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Setting";
+}
+
+<div class="container">
+    <div class="jumbotron">
+        <h2>Setting</h2>
+        <hr /><br />
+        <div class="list-group">
+            <a class="list-group-item" href="~/PatientInfoes/Index">Patients <span class="badge">@ViewBag.PatientCount</span></a>
+            <a class="list-group-item" href="~/TestInfoes/Index">Tests <span class="badge">@ViewBag.TestCount</span></a>
+            <a class="list-group-item" href="~/CategoryInfoes/Index">Category <span class="badge">@ViewBag.CategoryCount</span></a>
+            <a class="list-group-item" href="~/Users/Index">Users <span class="badge">@ViewBag.UserCount</span></a>
+            @if (HttpContext.Current.User.IsInRole("SuperAdmin"))
+            {
+                <a class="list-group-item" href="~/Roles/Index">Roles <span class="badge">@ViewBag.RolesCount</span></a>
+            }
+        </div>
+    </div>
+</div>
