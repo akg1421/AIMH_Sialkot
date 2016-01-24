@@ -5,9 +5,9 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h3>Analysis Report</h3><small>(Current month selected by default.)</small>
+        <h3>Analysis Report</h3>@*<small>(Current month selected by default.)</small>*@
         <hr />
-        <form class="form-inline" href="~/Home/AnalysisReport" method="post">
+        @*<form class="form-inline" href="~/Home/AnalysisReport" method="post">
             <div class="form-group">
                 <label>From:&nbsp;</label>
                 <input class="form-control" type="date" name="fromdate" placeholder="Select month-year" required="required" />
@@ -17,22 +17,22 @@
                 <input class="form-control" type="text" name="testname" placeholder="Enter test name" />
                 <input type="submit" class="btn btn-default form-control" value="Check" />
             </div>
-        </form><br />
+        </form>*@<br />
 
         <p>
-            <b>Daily Cash:  Rs. </b><b>/-</b>
+            <b>Daily Cash:  Rs. </b><b>@ViewBag.dailyCash /-</b>
         </p>
 
         <p>
-            <b>Monthly Cash:  Rs. </b><b>/-</b>
+            <b>Monthly Cash:  Rs. </b><b>@ViewBag.monthlyCash /-</b>
         </p>
 
         <p>
-            <b>No of tests:  </b>
+            <b>No of tests: </b><b>@ViewBag.no_of_tests</b>
         </p>
 
         <p>
-            <b>No of patients: </b>
+            <b>No of patients: </b><b>@ViewBag.no_of_patients</b>
         </p>
     </div>
 

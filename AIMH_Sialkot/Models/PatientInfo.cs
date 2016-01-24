@@ -69,5 +69,8 @@ namespace AIMH_Sialkot.Models
         public string ModifiedOn { get; set; }
         public string ModifiedBy { get; set; }
 
+        public int LumpSum { get; set; }
+
+        public int TestTotal { get; set; }
     }
 }

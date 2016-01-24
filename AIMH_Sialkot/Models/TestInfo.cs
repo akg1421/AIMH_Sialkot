@@ -27,5 +27,8 @@ namespace AIMH_Sialkot.Models
         public string CreatedBy { get; set; }
         public string ModifiedOn { get; set; }
         public string ModifiedBy { get; set; }
+
+        [Required(ErrorMessage = "Test price is required.")]
+        public int Price { get; set; }
     }
 }

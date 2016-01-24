@@ -131,11 +131,13 @@ namespace AIMH_Sialkot.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TestID,TestName,Abbreviation,Details,CreatedOn,CreatedBy,ModifiedOn,ModifiedBy")] TestInfo testInfo)
+        public ActionResult Edit([Bind(Include = "TestID,TestName,Price,Abbreviation,Details,CreatedOn,CreatedBy,ModifiedOn,ModifiedBy")] TestInfo testInfo)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(testInfo).State = EntityState.Modified;
+                testInfo.ModifiedBy = User.Identity.Name;
+                testInfo.ModifiedOn = DateTime.Now.ToShortDateString();
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

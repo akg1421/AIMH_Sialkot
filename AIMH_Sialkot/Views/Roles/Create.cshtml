@@ -3,19 +3,21 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create Role</h2>
-@Html.ActionLink("List Roles", "Index")
-<hr/>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+<div class="jumbotron col-md-offset-2 col-md-8">
+    <h2>Create Role</h2>
+    @Html.ActionLink("List Roles", "Index")
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
 
-    <div>
-        Role name
-    </div>
-    <p>
-        @Html.TextBox("RoleName")
-    </p>
-    <input type="submit" value="Save" />
-}
+        <div>
+            Role name
+        </div>
+        <p>
+            @Html.TextBox("RoleName")
+        </p>
+        <input type="submit" value="Save" />
+    }
+</div>

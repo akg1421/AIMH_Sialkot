@@ -1,4 +1,11 @@
-﻿
+﻿<div class="row">
+    @if (ViewBag.message != null)
+    {
+        <div class="success text-center">
+            @ViewBag.message
+        </div>
+    }
+</div>
 <div class="container">
     <div class="row">
         @*<p><small>Incase you delete yourself contact pitb.</small></p>*@
@@ -7,13 +14,18 @@
             @if (ViewBag.AdminUserList != null)
             {
                 <tr>
-                    <th class="col-md-12">
+                    <th class="col-md-6">
                         Name
                     </th>
-                    @*<th class="col-md-1">
-                    </th>*@
+                    <th class="col-md-5">
+                        Role
+                    </th>
+                    <th class="col-md-1">
+
+                    </th>
                 </tr>
             }
+
 
             @foreach (var x in ViewBag.AdminUserList)
             {
@@ -21,13 +33,20 @@
                     <td>
                         @x.UserName
                     </td>
-                    @*<td>
+                    <td>
+                        Admin
+                    </td>
+                    <td>
                         <div class="btn-group btn-group-xs" role="group" aria-label="...">
-                            <a href='@Url.Action("Delete", "Users", new { userid = x.Id })' title="Delete" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                            @{
+                                string AdminId = Convert.ToString(x.Id);
+                            }
+                            <a href='@Url.Action("Delete", "Users", new { id = AdminId, role = "Admin" })' title="Delete" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                            <a href='@Url.Action("ResetPassword", "Users", new { id = AdminId })' title="Reset Password" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-refresh"></span></a>
                         </div>
-                    </td>*@
+                    </td>
                 </tr>
-            }
+                                }
 
             @foreach (var y in ViewBag.OptUserList)
             {
@@ -35,13 +54,20 @@
                     <td>
                         @y.UserName
                     </td>
-                    @*<td>
+                    <td>
+                        Operator
+                    </td>
+                    <td>
                         <div class="btn-group btn-group-xs" role="group" aria-label="...">
-                            <a href='@Url.Action("Delete", "Users", new { userid = y.Id })' title="Delete" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                            @{
+                                string OperatorId = Convert.ToString(y.Id);
+                            }
+                            <a href='@Url.Action("Delete", "Users", new {id = OperatorId, role = "Operator" })' title="Delete" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                            <a href='@Url.Action("ResetPassword", "Users", new { id = OperatorId })' title="Reset Password" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-refresh"></span></a>
                         </div>
-                    </td>*@
+                    </td>
                 </tr>
-            }
+                                }
         </table>
     </div>
 </div>

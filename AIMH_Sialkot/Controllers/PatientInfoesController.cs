@@ -128,7 +128,7 @@ namespace AIMH_Sialkot.Controllers
 
                 else
                 {
-                    if (Convert.ToDateTime(LastPatient.CreatedOn).Month < DateTime.Now.Month)
+                    if (Convert.ToDateTime(LastPatient.CreatedOn).Month < DateTime.Now.Month || LastPatient.CreatedOn.Year < DateTime.Now.Year)
                         currentLabno = 1;
                     else
                         currentLabno = LastPatient.LabNo + 1;
@@ -159,20 +159,26 @@ namespace AIMH_Sialkot.Controllers
                     ReportingDate = DateTime.Now.ToShortDateString(),
                     CreatedOn = DateTime.Now,
                     CreatedBy = User.Identity.Name,
+                    LumpSum = 0
                 };
                 db.PatientInfo.Add(patient);
                 db.SaveChanges();
 
+                int LumpSum = 0;
                 List<ViewModel_TestCheckBoxes> chkboxlist = Testlist.ToList();
                 for (int i = 0; i < chkboxlist.Count(); i++)
                 {
                     if (chkboxlist[i].CheckBoxVal)
                     {
                         int checkboxval = chkboxlist[i].TestID;
+                        int testPrice = db.TestInfo.Where(x => x.TestID == checkboxval).Select(x => x.Price).First();
+                        LumpSum += testPrice;//Lump Sum for one patient entry
+
                         int[] optionIDs = db.TestOptions.Where(x => x.TestID == checkboxval).Select(x => x.OptionID).ToArray();
                         for (int j = 0; j < optionIDs.Length; j++)
                         {
                             Results result = new Results { PatientID = patient.PatientID, TestID = chkboxlist[i].TestID, OptionID = optionIDs[j], Value = null };
+                            
                             db.Results.Add(result);
                         }
                     }
@@ -192,6 +198,12 @@ namespace AIMH_Sialkot.Controllers
                 //        });
                 //    }
                 //}
+
+                db.SaveChanges();
+
+                var patientEntry = db.PatientInfo.Find(patient.PatientID);
+                patientEntry.LumpSum = LumpSum;
+                patientEntry.TestTotal = chkboxlist.Where(x => x.CheckBoxVal == true).Count();
 
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
@@ -224,7 +236,7 @@ namespace AIMH_Sialkot.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PatientID,LabNo,ReceiptNo,BookNo,Name,Guardian,Age,Sex,TimeIn,ReceivingDate,OutdoorNo,ReportingDate,IndoorNo,Ward,ReferenceBy,CreatedOn,CreatedBy,ModifiedOn,ModifiedBy")] PatientInfo patientInfo)
+        public ActionResult Edit([Bind(Include = "PatientID,LabNo,LumpSum,ReceiptNo,BookNo,Name,Guardian,Age,Sex,TimeIn,ReceivingDate,OutdoorNo,ReportingDate,IndoorNo,Ward,ReferenceBy,CreatedOn,CreatedBy,ModifiedOn,ModifiedBy")] PatientInfo patientInfo)
         {
             var CategoryInfo = db.Category.Select(x => new { CategoryID = x.CategoryID, CategoryName = x.CategoryName });
             ViewBag.CategoryInfo = new SelectList(CategoryInfo, "CategoryID", "CategoryName");
