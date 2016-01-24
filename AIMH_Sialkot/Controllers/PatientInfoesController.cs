@@ -113,6 +113,11 @@ namespace AIMH_Sialkot.Controllers
             ViewBag.CategoryInfo = new SelectList(CategoryInfo, "CategoryID", "CategoryName");
 
             int tests_selected = 0;
+            if (Testlist == null)
+            {
+                ViewBag.message = "Tests must be selected";
+                return View(patientInfo);
+            }
             foreach (var x in Testlist)
                 if (x.CheckBoxVal == true)
                     tests_selected++;

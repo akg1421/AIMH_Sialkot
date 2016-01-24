@@ -29,7 +29,7 @@ namespace AIMH_Sialkot.Controllers
 
             if(patient_set.Count() == 0)
             {
-                ViewBag.message = "All test results are entered. Click to Add Patient";
+                ViewBag.message = "No test results require entry. Click to Add Patient";
                 return View();
             }
 

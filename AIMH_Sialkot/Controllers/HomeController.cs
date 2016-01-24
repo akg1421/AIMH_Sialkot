@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 
 namespace AIMH_Sialkot.Controllers
 {
@@ -90,7 +92,11 @@ namespace AIMH_Sialkot.Controllers
         {
             ViewBag.PatientCount = db.PatientInfo.Count();
             ViewBag.TestCount = db.TestInfo.Count();
-            ViewBag.UserCount = db.Users.Count();
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+
+            var role1 = roleManager.FindByName("SuperAdmin").Users.Count();
+            ViewBag.UserCount = db.Users.Count() - role1;
             ViewBag.CategoryCount = db.Category.Count();
             ViewBag.RolesCount = db.Roles.Count();
             return View();
@@ -125,7 +131,7 @@ namespace AIMH_Sialkot.Controllers
 
             int? no_of_patients = db.PatientInfo.Count();
             if (no_of_patients == null)
-                ViewBag.no_of_patients = "(No patients exist)";
+                ViewBag.no_of_patients = "(No patients enteries)";
             else
                 ViewBag.no_of_patients = no_of_patients;
 
@@ -133,7 +139,7 @@ namespace AIMH_Sialkot.Controllers
 
             var no_of_testsSET = db.PatientInfo.Select(x => x.TestTotal);
             if (no_of_testsSET.Count() == 0 || no_of_testsSET == null)
-                ViewBag.no_of_tests = "(No test exist)";
+                ViewBag.no_of_tests = "(No tests taken)";
             else
             {
                 int no_of_tests = db.PatientInfo.Select(x => x.TestTotal).Sum();

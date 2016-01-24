@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AIMH_Sialkot.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AIMH_Sialkot.Controllers
 {
@@ -79,14 +80,32 @@ namespace AIMH_Sialkot.Controllers
 
         //
         // GET: /Roles/Delete/5
-        public ActionResult Delete(string RoleName)
+        public async System.Threading.Tasks.Task<ActionResult> Delete(string RoleName)
         {
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+
+            var UserList = roleManager.FindByName(RoleName).Users;
+
+            if (UserList != null)
+            {
+                foreach (var x in UserList)
+                {
+                    var user = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().Users.SingleOrDefault(u => u.Id == x.UserId);
+                    var remFromRole = await HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().RemoveFromRoleAsync(x.UserId, RoleName);
+                    if (remFromRole.Succeeded)
+                    {
+                        // Remove user from UserStore
+                        var results = await HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().DeleteAsync(user);
+                    }
+                }
+            }
+
             var thisRole = db.Roles.Where(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
             db.Roles.Remove(thisRole);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        
+
     }
 }

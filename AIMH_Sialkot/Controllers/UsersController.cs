@@ -17,16 +17,23 @@ namespace AIMH_Sialkot.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Users
+
         public ActionResult Index()
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            
-            var role1 = roleManager.FindByName("Admin").Users.First();
-            ViewBag.AdminUserList = db.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(role1.RoleId)).ToList();
+
+            var role1 = roleManager.FindByName("Admin").Users.FirstOrDefault();
+            if (role1 == null)
+                ViewBag.AdminUserList = null;
+            else
+                ViewBag.AdminUserList = db.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(role1.RoleId)).ToList();
 
 
-            var role2 = roleManager.FindByName("Operator").Users.First();
-            ViewBag.OptUserList = db.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(role2.RoleId)).ToList();
+            var role2 = roleManager.FindByName("Operator").Users.FirstOrDefault();
+            if (role2 == null)
+                ViewBag.OptUserList = null;
+            else
+                ViewBag.OptUserList = db.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(role2.RoleId)).ToList();
 
             return View();
         }
