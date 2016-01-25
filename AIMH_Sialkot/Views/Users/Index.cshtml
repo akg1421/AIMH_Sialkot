@@ -1,8 +1,10 @@
-﻿<div class="row">
-    @if (ViewBag.message != null)
+﻿@model IEnumerable<AIMH_Sialkot.Models.ViewModel_ApplicationUser>
+
+<div class="row">
+    @if (TempData["msg"] != null)
     {
         <div class="success text-center">
-            @ViewBag.message
+            <strong class="text-success">@TempData["msg"]</strong>
         </div>
     }
 </div>
@@ -11,12 +13,10 @@
         @*<p><small>Incase you delete yourself contact pitb.</small></p>*@
 
 
-        @if (ViewBag.OptUserList != null || ViewBag.AdminUserList != null)
+        @if (Model != null && Model.Count() != 0)
         {
             <table class="table table-striped table-bordered">
 
-                @if (ViewBag.AdminUserList != null)
-                {
                     <tr>
                         <th class="col-md-6">
                             Name
@@ -28,61 +28,34 @@
 
                         </th>
                     </tr>
-                }
+                
 
-                @if (ViewBag.AdminUserList != null)
+               
+                   @foreach (var item in Model)
                 {
-                    foreach (var x in ViewBag.AdminUserList)
-                    {
                         <tr>
                             <td>
-                                @x.UserName
+                                @Html.DisplayFor(modelItem => item.Username)
                             </td>
                             <td>
-                                Admin
+                                @Html.DisplayFor(modelItem => item.Rolename)
                             </td>
                             <td>
                                 <div class="btn-group btn-group-xs" role="group" aria-label="...">
                                     @{
-                                        string AdminId = Convert.ToString(x.Id);
+                                        string AdminId = Convert.ToString(item.id);
                                     }
-                                    <a href='@Url.Action("Delete", "Users", new { id = AdminId, role = "Admin" })' title="Delete" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                                    <a href='@Url.Action("Delete", "Users", new { id = AdminId, role = item.Rolename })' title="Delete" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                     <a href='@Url.Action("ResetPassword", "Users", new { id = AdminId })' title="Reset Password" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-refresh"></span></a>
                                 </div>
                             </td>
                         </tr>
                                             }
-                                        }
-
-
-                @if (ViewBag.OptUserList != null)
-                {
-                    foreach (var y in ViewBag.OptUserList)
-                    {
-                        <tr>
-                            <td>
-                                @y.UserName
-                            </td>
-                            <td>
-                                Operator
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-xs" role="group" aria-label="...">
-                                    @{
-                                        string OperatorId = Convert.ToString(y.Id);
-                                    }
-                                    <a href='@Url.Action("Delete", "Users", new {id = OperatorId, role = "Operator" })' title="Delete" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
-                                    <a href='@Url.Action("ResetPassword", "Users", new { id = OperatorId })' title="Reset Password" target="_blank" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-refresh"></span></a>
-                                </div>
-                            </td>
-                        </tr>
-                                            }
-                                        }
-
+                                        
             </table>
                                         }
 
-        @if (ViewBag.OptUserList == null && ViewBag.AdminUserList == null)
+        @if (Model == null && Model.Count() == 0)
         {
             <div class="alert alert-default text-center">
                 <a href="~/Account/Register"><strong class="text-danger">No user exists. Click to register a user.</strong></a>

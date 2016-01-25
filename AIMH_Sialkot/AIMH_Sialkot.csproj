@@ -243,6 +243,7 @@
     <Compile Include="Models\Results.cs" />
     <Compile Include="Models\TestInfo.cs" />
     <Compile Include="Models\TestOptions.cs" />
+    <Compile Include="Models\ViewModel_ApplicationUser.cs" />
     <Compile Include="Models\ViewModel_TestCheckBoxes.cs" />
     <Compile Include="Models\ViewModel_TestOptionsResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

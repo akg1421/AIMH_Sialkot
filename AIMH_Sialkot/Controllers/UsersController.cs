@@ -18,24 +18,49 @@ namespace AIMH_Sialkot.Controllers
 
         // GET: Users
 
-        public ActionResult Index()
+        public ActionResult Index(string msg)
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var RoleCount = roleManager.Roles.Count() - 1;
+            if (RoleCount <= 0)
+                return View();
 
-            var role1 = roleManager.FindByName("Admin").Users.FirstOrDefault();
-            if (role1 == null)
-                ViewBag.AdminUserList = null;
+            if (string.IsNullOrEmpty(msg))
+                TempData["msg"] = null;
             else
-                ViewBag.AdminUserList = db.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(role1.RoleId)).ToList();
+                TempData["msg"] = msg;
+
+            string[] RoleNames = roleManager.Roles.Where(x=>x.Name != "SuperAdmin").Select(x => x.Name).ToArray();
+            List<ViewModel_ApplicationUser> UserList = new List<ViewModel_ApplicationUser>();
+            
+            
+
+            for (int i = 0; i < RoleCount; i++)
+            {
+                var role = roleManager.FindByName(RoleNames[i]).Users.FirstOrDefault();
+                var users = db.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(role.RoleId)).ToList();
+                foreach(var user in users)
+                {
+                    UserList.Add(new ViewModel_ApplicationUser { id = user.Id, Username = user.UserName, Rolename = RoleNames[i] });
+                }
+            }
 
 
-            var role2 = roleManager.FindByName("Operator").Users.FirstOrDefault();
-            if (role2 == null)
-                ViewBag.OptUserList = null;
-            else
-                ViewBag.OptUserList = db.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(role2.RoleId)).ToList();
 
-            return View();
+            //var role1 = roleManager.FindByName(RoleNames[0]).Users.FirstOrDefault();
+            //if (role1 == null)
+            //    ViewBag.AdminUserList = null;
+            //else
+            //    ViewBag.AdminUserList = db.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(role1.RoleId)).ToList();
+
+
+            //var role2 = roleManager.FindByName(RoleNames[1]).Users.FirstOrDefault();
+            //if (role2 == null)
+            //    ViewBag.OptUserList = null;
+            //else
+            //    ViewBag.OptUserList = db.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(role2.RoleId)).ToList();
+
+            return View(UserList);
         }
         // GET: Users/Details/5
         public ActionResult Details(int id)
@@ -91,6 +116,7 @@ namespace AIMH_Sialkot.Controllers
         
         public async Task<ActionResult> Delete(string id, string role)
         {
+            TempData["message"] = null;
             // Check for for both ID and Role and exit if not found
             if (id == null || role == null)
             {
@@ -161,8 +187,8 @@ namespace AIMH_Sialkot.Controllers
             //store.SetPasswordHashAsync(cUser, hashedNewPassword);
 
 
-            ViewBag.message = "New password = admin123 has been assigned to user = " + cUser.UserName;
-            return RedirectToAction("Index", "Users", new { area = "Dashboard" });
+            string message = "New password = admin123 has been assigned to user = " + cUser.UserName;
+            return RedirectToAction("Index", "Users", new { msg = message });
         }
     }
 }
